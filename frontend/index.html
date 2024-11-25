@@ -1,21 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="disclaimer" id="disclaimer">
-        Disclaimer: All medicine names and prices used in this application are fictional and do not represent any real medicine(s).
+      Disclaimer: All medicine names and prices used in this application are
+      fictional and do not represent any real medicine(s).
     </div>
-    <header>
-        <h1>Medicine Tracker</h1>
+    <header class="title__centre">
+      <h1>Medicine Tracker</h1>
     </header>
-    <main>
+    <main class="master">
+      <div class="leftside__container">
+        <div class="editmeds__container items__centre">
+          <h3 class="title__centre">Edit database</h3>
+          <div class="edit__radios">
+            <label for="edit_option_create"
+              ><input
+                id="edit_option_create"
+                type="radio"
+                name="edit_med"
+                value="create"
+                checked
+              />
+              Create</label
+            >
+            <label for="edit_option_update"
+              ><input
+                id="edit_option_update"
+                type="radio"
+                name="edit_med"
+                value="update"
+              />
+              Update</label
+            >
+            <label for="edit_option_del"
+              ><input
+                id="edit_option_del"
+                type="radio"
+                name="edit_med"
+                value="del"
+              />
+              Delete</label
+            >
+          </div>
 
+          <form id="form_create" class="edit__form items__centre">
+            <label
+              >Medicine name <br />
+              <input
+                type="text"
+                name="med_name"
+                id=""
+                required
+                placeholder="e.g. Elixirium"
+            /></label>
+            <label
+              >Price <br />
+              <input
+                type="number"
+                name="med_price"
+                step="any"
+                id=""
+                required
+                placeholder="e.g. 5.99"
+            /></label>
+            <input type="submit" name="submit" value="Create" />
+          </form>
+
+          <form id="form_update" class="edit__form items__centre hidden">
+            <label
+              >Medicine name <br />
+              <input
+                type="text"
+                name="med_name"
+                required
+                placeholder="e.g. Elixirium"
+            /></label>
+            <label
+              >Price <br />
+              <input
+                type="number"
+                name="med_price"
+                step="any"
+                required
+                placeholder="e.g. 5.99"
+            /></label>
+            <input type="submit" name="submit" value="Update" />
+          </form>
+
+          <form id="form_del" class="edit__form items__centre hidden">
+            <label
+              >Medicine name <br />
+              <input
+                type="text"
+                name="med_name"
+                required
+                placeholder="e.g. Elixirium"
+            /></label>
+            <input type="submit" name="submit" value="Delete" />
+          </form>
+        </div>
+        <div class="avgprice__container">
+          <h3 class="title__centre">Average price</h3>
+          <div id="average__container" class="items__centre">
+            Fetching average...
+          </div>
+        </div>
+      </div>
+
+      <div class="rightside__container">
+        <h3 class="title__centre">Medicines</h3>
+        <div class="table__container">
+          <table>
+            <tr class="medicine__headers">
+              <th>#</th>
+              <th>Name</th>
+              <th>Price (£)</th>
+            </tr>
+            <tbody id="med-list"></tbody>
+          </table>
+        </div>
+      </div>
     </main>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

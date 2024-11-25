@@ -56,7 +56,7 @@ def get_single_med(name: str):
         data = json.load(meds)
         for med in data["medicines"]:
             print(med)
-            if med['name'] == name:
+            if med['name'].strip().lower() == name:
                 return med
     return {"error": "Medicine not found"}
 
@@ -71,6 +71,7 @@ def create_med(name: str = Form(...), price: float = Form(...)):
     Returns:
         dict: A message confirming the medicine was created successfully.
     """
+    print("called")
     with open('data.json', 'r+') as meds:
         current_db = json.load(meds)
         new_med = {"name": name, "price": price}
@@ -95,7 +96,7 @@ def update_med(name: str = Form(...), price: float = Form(...)):
     with open('data.json', 'r+') as meds:
         current_db = json.load(meds)
         for med in current_db["medicines"]:
-            if med['name'] == name:
+            if med['name'].strip().lower() == name:
                 med['price'] = price
                 meds.seek(0)
                 json.dump(current_db, meds)
@@ -114,9 +115,10 @@ def delete_med(name: str = Form(...)):
         dict: A message confirming the medicine was deleted successfully.
     """
     with open('data.json', 'r+') as meds:
+        print(name)
         current_db = json.load(meds)
         for med in current_db["medicines"]:
-            if med['name'] == name:
+            if med['name'].strip().lower() == name:
                 current_db["medicines"].remove(med)
                 meds.seek(0)
                 json.dump(current_db, meds)
@@ -125,6 +127,21 @@ def delete_med(name: str = Form(...)):
     return {"error": "Medicine not found"}
 
 # Add your average function here
+# Calculates the average price across all medicines and returns it
+@app.post("/get_average_price")
+def get_average_price():
+    try:
+        with open("data.json") as meds:
+            data = json.load(meds)
+            medicines = data["medicines"]
+            # Calculates the total price across all medicines
+            total = sum([med["price"] for med in medicines if med["price"] is not None])
+            # Calculates the average price
+            avg = round(total / len(medicines), 2)
+            return {"status": "success", "average": avg}
+    except Exception as e:
+        print("Exception occurred:", e)
+        return {"error": "Error getting average price of medicines."}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000,)
